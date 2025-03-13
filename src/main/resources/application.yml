@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: payment-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:adm}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+
+server:
+  port: 8080
+
+payment:
+  stripe:
+    api-key: ${STRIPE_API_KEY}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+  paypal:
+    client-id: ${PAYPAL_CLIENT_ID}
+    client-secret: ${PAYPAL_CLIENT_SECRET}
+    mode: ${PAYPAL_MODE:sandbox} # sandbox or live
+  pix:
+    api-key: ${PIX_API_KEY}
+    endpoint: ${PIX_ENDPOINT:https://api.pix.example.com}
+
+jwt:
+  secret: ${JWT_SECRET:5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437}
+  expiration: 86400000 # 24 hours
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
